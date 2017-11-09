@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php
+
+use Doctrine\ORM\Tools\Console\ConsoleRunner;
+use Slim\Container;
+use Symfony\Component\Console\Helper\HelperSet;
+
+/** @var Container $cnt */
+$cnt = require_once __DIR__ . '/../bootstrap.php';
+
+ConsoleRunner::run($cnt[HelperSet::class]);

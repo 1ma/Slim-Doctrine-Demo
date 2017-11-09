@@ -1,0 +1,41 @@
+{
+    "name": "uma/slim-doctrine-demo",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "UMA\\DoctrineDemo\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "UMA\\Tests\\DoctrineDemo\\": "tests/"
+        }
+    },
+    "require": {
+        "php": ">= 7.0",
+        "ext-sqlite3": "*",
+
+        "doctrine/orm": "^2.5",
+        "fzaninotto/faker": "^1.7",
+        "roave/security-advisories": "dev-master",
+        "slim/slim": "^3.9"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.4"
+    },
+    "scripts": {
+        "serve": [
+            "@composer install",
+            "php bin/doctrine orm:schema:update --force",
+            "php -S localhost:8000 -t public public/index.php"
+        ],
+        "test": [
+            "@composer install",
+            "php vendor/bin/phpunit"
+        ]
+    },
+    "config": {
+        "process-timeout": 0
+    }
+}
