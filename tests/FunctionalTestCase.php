@@ -6,14 +6,15 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Tools\SchemaTool;
 use PHPUnit\Framework\TestCase;
-use Slim\Container;
+use Slim\App;
+use Slim\Http;
 
 class FunctionalTestCase extends TestCase
 {
     /**
-     * @var Container
+     * @var App
      */
-    protected static $container;
+    protected static $app;
 
     /**
      * @var SchemaTool
@@ -27,11 +28,12 @@ class FunctionalTestCase extends TestCase
 
     public static function setUpBeforeClass()
     {
-        self::$container = $GLOBALS['cnt'];
-        self::$tool = new SchemaTool(self::$container[EntityManager::class]);
-        self::$schema = self::$container[EntityManager::class]
-            ->getMetadataFactory()
-            ->getAllMetadata();
+        self::$app = $GLOBALS['cnt'][App::class];
+
+        /** @var EntityManager $em */
+        $em = self::$app->getContainer()[EntityManager::class];
+        self::$schema = $em->getMetadataFactory()->getAllMetadata();
+        self::$tool = new SchemaTool($em);
     }
 
     /**
@@ -50,4 +52,14 @@ class FunctionalTestCase extends TestCase
         self::$tool->dropSchema(self::$schema);
     }
 
+    protected function runApp(Http\Environment $environment): Http\Response
+    {
+        /** @var Http\Response $response */
+        $response = self::$app->process(
+            Http\Request::createFromEnvironment($environment),
+            new Http\Response()
+        );
+
+        return $response;
+    }
 }

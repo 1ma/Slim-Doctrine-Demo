@@ -1,12 +1,10 @@
 <?php
 
-namespace UMA\Tests\DoctrineDemo;
+namespace UMA\Tests\DoctrineDemo\Functional;
 
 use Psr\Http\Message\ResponseInterface;
-use Slim\App;
 use Slim\Http\Environment;
-use Slim\Http\Request;
-use Slim\Http\Response;
+use UMA\Tests\DoctrineDemo\FunctionalTestCase;
 
 class AppTest extends FunctionalTestCase
 {
@@ -49,15 +47,5 @@ class AppTest extends FunctionalTestCase
         $users = json_decode((string) $this->testGetUsers()->getBody());
 
         self::assertCount(3, $users);
-    }
-
-    private function runApp(Environment $environment): ResponseInterface
-    {
-        /** @var App $app */
-        $app = self::$container[App::class];
-
-        return $app->process(
-            Request::createFromEnvironment($environment), new Response()
-        );
     }
 }

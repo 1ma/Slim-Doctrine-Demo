@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+declare(strict_types=1);
+
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Slim\Container;
 use Symfony\Component\Console\Helper\HelperSet;

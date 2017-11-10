@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace UMA\DoctrineDemo\Action;
 
 use Doctrine\ORM\EntityManager;
