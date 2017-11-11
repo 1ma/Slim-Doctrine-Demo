@@ -11,8 +11,8 @@ class UserTest extends TestCase
 {
     public function testPasswordIsHashedWithBcrypt()
     {
-        $user = new User('john.doe@example.com', $plainPwd = 'abcd');
+        $sut = new User('john.doe@example.com', $plainPwd = 'abcd');
 
-        self::assertTrue(password_verify($plainPwd, $user->getHash()));
+        self::assertTrue(password_verify($plainPwd, $sut->getHash()));
     }
 }

@@ -25,21 +25,13 @@ At its core, Doctrine's `EntityManager` is used to persist and retrieve those us
 Slim-Doctrine-Demo
 ├── bin
 │   └── doctrine            -- Doctrine Command Line Interface
-├── bootstrap.php           -- DI container setup (requires ./settings.php)
-├── composer.json
-├── LICENSE
-├── phpunit.xml.dist
 ├── public
 │   └── index.php           -- HTTP front controller (requires ../bootstrap.php)
-├── README.md
-├── settings.php            -- Settings currently in use (not committed to Git)
-├── settings_devel.php      -- Settings for development
-├── settings_test.php       -- Settings for running the tests
 ├── src
 │   ├── Action              -- Slim request handlers
 │   │   ├── CreateUser.php
 │   │   └── ListUsers.php
-│   ├── Domain              -- Annotated entity classes go here
+│   ├── Domain              -- Annotated entity classes
 │   │   └── User.php
 │   └── Provider
 │       ├── Doctrine.php    -- EntityManager service definition
@@ -49,10 +41,19 @@ Slim-Doctrine-Demo
 │   │   └── AppTest.php
 │   ├── FunctionalTestCase.php
 │   └── Unit
+│       ├── ProvidersTest.php
 │       └── UserTest.php
-└── var
-    ├── coverage/           -- Test coverage results in HTML
-    └── database.sqlite     -- Development database
+├── var
+│   ├── coverage/           -- Test coverage results in HTML
+│   └── database.sqlite     -- Development database
+├── bootstrap.php           -- DI container setup (requires ./settings.php)
+├── composer.json
+├── LICENSE
+├── phpunit.xml.dist
+├── README.md
+├── settings.php            -- Settings currently in use (not committed to Git)
+├── settings_devel.php      -- Settings for development
+└── settings_test.php       -- Settings for running the tests
 ```
 
 ## Running the app
