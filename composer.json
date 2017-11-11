@@ -27,11 +27,13 @@
     "scripts": {
         "serve": [
             "@composer install",
+            "cp settings_devel.php settings.php",
             "php bin/doctrine orm:schema:update --force",
             "php -S localhost:8000 -t public public/index.php"
         ],
         "test": [
             "@composer install",
+            "cp settings_test.php settings.php",
             "php vendor/bin/phpunit"
         ]
     },

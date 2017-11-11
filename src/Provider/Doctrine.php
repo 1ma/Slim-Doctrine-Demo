@@ -7,11 +7,9 @@ namespace UMA\DoctrineDemo\Provider;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
-use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Doctrine\ORM\Tools\Setup;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
-use Symfony\Component\Console\Helper\HelperSet;
 
 class Doctrine implements ServiceProviderInterface
 {
@@ -20,26 +18,21 @@ class Doctrine implements ServiceProviderInterface
      */
     public function register(Container $cnt)
     {
-        $cnt['db'] = function (): array {
-            return [
-                'driver' => 'pdo_sqlite',
-                'path' => APP_ROOT . '/var/database.sqlite'
-            ];
-        };
-
         $cnt[EntityManager::class] = function (Container $cnt): EntityManager {
-            $paths = [APP_ROOT . '/src/Domain'];
-
-            $config = Setup::createAnnotationMetadataConfiguration($paths, true);
-            $config->setMetadataDriverImpl(
-                new AnnotationDriver(new AnnotationReader, $paths)
+            $config = Setup::createAnnotationMetadataConfiguration(
+                $cnt['settings']['doctrine']['paths'], true
             );
 
-            return EntityManager::create($cnt['db'], $config);
-        };
+            $config->setMetadataDriverImpl(
+                new AnnotationDriver(
+                    new AnnotationReader,
+                    $cnt['settings']['doctrine']['paths']
+                )
+            );
 
-        $cnt[HelperSet::class] = function (Container $cnt): HelperSet {
-            return ConsoleRunner::createHelperSet($cnt[EntityManager::class]);
+            return EntityManager::create(
+                $cnt['settings']['doctrine']['conn'], $config
+            );
         };
     }
 }
