@@ -7,8 +7,10 @@ return [
         'displayErrorDetails' => true,
 
         'doctrine' => [
-            'paths' => [APP_ROOT . '/src/Domain'],
-            'conn' => [
+            'dev_mode' => true,
+            'cache_dir' => APP_ROOT . '/var/doctrine',
+            'metadata_dirs' => [APP_ROOT . '/src/Domain'],
+            'connection' => [
                 'driver' => 'pdo_sqlite',
                 'memory' => true
             ]

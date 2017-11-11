@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace UMA\DoctrineDemo\Provider;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Cache\FilesystemCache;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\Tools\Setup;
@@ -27,18 +28,26 @@ class Doctrine implements ServiceProviderInterface
     {
         $cnt[EntityManager::class] = function (Container $cnt): EntityManager {
             $config = Setup::createAnnotationMetadataConfiguration(
-                $cnt['settings']['doctrine']['paths'], true
+                $cnt['settings']['doctrine']['metadata_dirs'],
+                $cnt['settings']['doctrine']['dev_mode']
             );
 
             $config->setMetadataDriverImpl(
                 new AnnotationDriver(
                     new AnnotationReader,
-                    $cnt['settings']['doctrine']['paths']
+                    $cnt['settings']['doctrine']['metadata_dirs']
+                )
+            );
+
+            $config->setMetadataCacheImpl(
+                new FilesystemCache(
+                    $cnt['settings']['doctrine']['cache_dir']
                 )
             );
 
             return EntityManager::create(
-                $cnt['settings']['doctrine']['conn'], $config
+                $cnt['settings']['doctrine']['connection'],
+                $config
             );
         };
     }

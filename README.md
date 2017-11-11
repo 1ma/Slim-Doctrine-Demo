@@ -69,7 +69,7 @@ $ curl -s -X POST localhost:8000/users | jq .
   "id": 2
 }
 
-$ curl -s localhost:8000/users | jq .
+$ curl -s -X GET localhost:8000/users | jq .
 [
   {
     "registered_at": "2017-11-11T15:32:46+01:00",
