@@ -12,6 +12,11 @@ use Slim\App;
 use UMA\DoctrineDemo\Action\CreateUser;
 use UMA\DoctrineDemo\Action\ListUsers;
 
+/**
+ * A ServiceProvider for registering services related
+ * to Slim such as request handlers, routing and the
+ * App service itself.
+ */
 class Slim implements ServiceProviderInterface
 {
     /**

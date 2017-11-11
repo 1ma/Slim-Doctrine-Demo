@@ -11,6 +11,13 @@ use Doctrine\ORM\Tools\Setup;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
+/**
+ * A ServiceProvider for registering services related to
+ * Doctrine in a DI container.
+ *
+ * If the project had custom repositories (e.g. UserRepository)
+ * they could be registered here.
+ */
 class Doctrine implements ServiceProviderInterface
 {
     /**

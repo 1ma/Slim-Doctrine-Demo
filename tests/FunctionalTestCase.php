@@ -9,12 +9,21 @@ use PHPUnit\Framework\TestCase;
 use Slim\App;
 use Slim\Http;
 
-class FunctionalTestCase extends TestCase
+/**
+ * An specialized TestCase for functional testing.
+ *
+ * Test cases extending this one will have a fresh
+ * in-memory database at the beginning of every test.
+ *
+ * It also provides a helper method to run the whole
+ * Slim application from a mocked Environment.
+ */
+abstract class FunctionalTestCase extends TestCase
 {
     /**
      * @var App
      */
-    protected static $app;
+    private static $app;
 
     /**
      * @var SchemaTool
@@ -36,20 +45,10 @@ class FunctionalTestCase extends TestCase
         self::$tool = new SchemaTool($em);
     }
 
-    /**
-     * Load the schema into the in-memory database before every test
-     */
     protected function setUp()
     {
-        self::$tool->createSchema(self::$schema);
-    }
-
-    /**
-     * Drop the whole schema from the in-memory database after every test
-     */
-    protected function tearDown()
-    {
         self::$tool->dropSchema(self::$schema);
+        self::$tool->createSchema(self::$schema);
     }
 
     protected function runApp(Http\Environment $environment): Http\Response

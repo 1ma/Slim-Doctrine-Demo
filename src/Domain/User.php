@@ -7,6 +7,9 @@ namespace UMA\DoctrineDemo\Domain;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * The User class demonstrates how to annotate a simple
+ * PHP class to act as a Doctrine entity.
+ *
  * @ORM\Entity()
  * @ORM\Table(name="users")
  */

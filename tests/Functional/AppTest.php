@@ -8,7 +8,7 @@ use UMA\Tests\DoctrineDemo\FunctionalTestCase;
 
 class AppTest extends FunctionalTestCase
 {
-    public function testPostUser()
+    public function testCreatingAUserWithThePostEndpoint()
     {
         $response = $this->runApp(new Environment([
             'REQUEST_METHOD' => 'POST',
@@ -20,7 +20,7 @@ class AppTest extends FunctionalTestCase
         self::assertStringStartsWith('application/json', $response->getHeaderLine('Content-Type'));
     }
 
-    public function testGetUsers(): ResponseInterface
+    public function testGettingAListOfUsersWithTheGetEndpoint(): ResponseInterface
     {
         $response = $this->runApp(new Environment([
             'REQUEST_METHOD' => 'GET',
@@ -34,18 +34,21 @@ class AppTest extends FunctionalTestCase
         return $response;
     }
 
-    public function testAppWorkflow()
+    public function testSeveralApiCalls()
     {
-        $users = json_decode((string) $this->testGetUsers()->getBody());
-
+        $users = json_decode((string) $this->testGettingAListOfUsersWithTheGetEndpoint()->getBody());
         self::assertCount(0, $users);
 
-        $this->testPostUser();
-        $this->testPostUser();
-        $this->testPostUser();
+        $this->testCreatingAUserWithThePostEndpoint();
+        $this->testCreatingAUserWithThePostEndpoint();
+        $this->testCreatingAUserWithThePostEndpoint();
 
-        $users = json_decode((string) $this->testGetUsers()->getBody());
-
+        $users = json_decode((string) $this->testGettingAListOfUsersWithTheGetEndpoint()->getBody());
         self::assertCount(3, $users);
+
+        $this->testCreatingAUserWithThePostEndpoint();
+
+        $users = json_decode((string) $this->testGettingAListOfUsersWithTheGetEndpoint()->getBody());
+        self::assertCount(4, $users);
     }
 }
