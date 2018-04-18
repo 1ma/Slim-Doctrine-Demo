@@ -88,7 +88,7 @@ $ curl -s -X GET localhost:8000/users | jq .
 
 ## Using the Doctrine Command Line Interface
 
-Run `php bin/doctrine` (this script needs the project dependencies, so run `composer install` first).
+Run `php vendor/bin/doctrine` (this script needs the project dependencies, so run `composer install` first).
 
 ## Running the tests
 

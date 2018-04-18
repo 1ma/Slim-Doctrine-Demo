@@ -15,20 +15,19 @@
     "require": {
         "php": ">= 7.1",
         "ext-sqlite3": "*",
-
-        "doctrine/orm": "^2.5",
+        "doctrine/orm": "^2.6",
         "fzaninotto/faker": "^1.7",
-        "roave/security-advisories": "dev-master",
         "slim/slim": "^3.9"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.4"
+        "phpunit/phpunit": "^7.0",
+        "roave/security-advisories": "dev-master"
     },
     "scripts": {
         "serve": [
             "@composer install",
             "cp settings_devel.php settings.php",
-            "php bin/doctrine orm:schema:update --force",
+            "php vendor/bin/doctrine orm:schema:update --force",
             "php -S localhost:8000 -t public public/index.php"
         ],
         "test": [
@@ -38,6 +37,7 @@
         ]
     },
     "config": {
-        "process-timeout": 0
+        "process-timeout": 0,
+        "sort-packages": true
     }
 }
