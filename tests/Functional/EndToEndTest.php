@@ -1,16 +1,53 @@
 <?php
 
+declare(strict_types=1);
+
 namespace UMA\Tests\DoctrineDemo\Functional;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Tools\SchemaTool;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
-use Slim\Http\Environment;
-use UMA\Tests\DoctrineDemo\FunctionalTestCase;
+use Slim\App;
+use Slim\Http;
 
-class AppTest extends FunctionalTestCase
+class EndToEndTest extends TestCase
 {
-    public function testCreatingAUserWithThePostEndpoint()
+    /**
+     * @var App
+     */
+    private static $app;
+
+    /**
+     * @var SchemaTool
+     */
+    private static $tool;
+
+    /**
+     * @var ClassMetadata[]
+     */
+    private static $schema;
+
+    public static function setUpBeforeClass()
     {
-        $response = $this->runApp(new Environment([
+        self::$app = $GLOBALS['cnt'][App::class];
+
+        /** @var EntityManager $em */
+        $em = self::$app->getContainer()[EntityManager::class];
+        self::$schema = $em->getMetadataFactory()->getAllMetadata();
+        self::$tool = new SchemaTool($em);
+    }
+
+    protected function setUp()
+    {
+        self::$tool->dropSchema(self::$schema);
+        self::$tool->createSchema(self::$schema);
+    }
+
+    public function testCreatingAUserWithThePostEndpoint(): void
+    {
+        $response = $this->runApp(new Http\Environment([
             'REQUEST_METHOD' => 'POST',
             'REQUEST_URI' => '/users'
         ]));
@@ -22,7 +59,7 @@ class AppTest extends FunctionalTestCase
 
     public function testGettingAListOfUsersWithTheGetEndpoint(): ResponseInterface
     {
-        $response = $this->runApp(new Environment([
+        $response = $this->runApp(new Http\Environment([
             'REQUEST_METHOD' => 'GET',
             'REQUEST_URI' => '/users'
         ]));
@@ -34,7 +71,7 @@ class AppTest extends FunctionalTestCase
         return $response;
     }
 
-    public function testSeveralApiCalls()
+    public function testSeveralApiCalls(): void
     {
         $users = json_decode((string) $this->testGettingAListOfUsersWithTheGetEndpoint()->getBody());
         self::assertCount(0, $users);
@@ -50,5 +87,16 @@ class AppTest extends FunctionalTestCase
 
         $users = json_decode((string) $this->testGettingAListOfUsersWithTheGetEndpoint()->getBody());
         self::assertCount(4, $users);
+    }
+
+    protected function runApp(Http\Environment $environment): Http\Response
+    {
+        /** @var Http\Response $response */
+        $response = self::$app->process(
+            Http\Request::createFromEnvironment($environment),
+            new Http\Response()
+        );
+
+        return $response;
     }
 }

@@ -37,15 +37,10 @@ Slim-Doctrine-Demo
 │   └── Provider
 │       ├── Doctrine.php    -- EntityManager service definition
 │       └── Slim.php        -- Slim service definitions
-├── tests                   -- Automated tests
-│   ├── Functional
-│   │   └── AppTest.php
-│   ├── FunctionalTestCase.php
-│   └── Unit
-│       ├── ProvidersTest.php
-│       └── UserTest.php
+├── tests/                  -- Automated tests
 ├── var
 │   ├── coverage/           -- Test coverage results in HTML
+│   ├── doctrine/           -- Doctrine metadata cache
 │   └── database.sqlite     -- Development database
 ├── bootstrap.php           -- DI container setup (requires ./settings.php)
 ├── composer.json

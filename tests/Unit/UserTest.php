@@ -9,7 +9,7 @@ use UMA\DoctrineDemo\Domain\User;
 
 class UserTest extends TestCase
 {
-    public function testPasswordIsHashedWithBcrypt()
+    public function testPasswordIsHashedWithBcrypt(): void
     {
         $sut = new User('john.doe@example.com', $plainPwd = 'abcd');
 

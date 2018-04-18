@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace UMA\Tests\DoctrineDemo\Unit;
 
 use Doctrine\ORM\EntityManager;
@@ -10,7 +12,7 @@ use UMA\DoctrineDemo\Provider;
 
 class ProvidersTest extends TestCase
 {
-    public function testContainer()
+    public function testContainer(): void
     {
         $sut = new Container(require APP_ROOT . '/settings.php');
 
