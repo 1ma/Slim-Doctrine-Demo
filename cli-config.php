@@ -9,6 +9,4 @@ use Slim\Container;
 /** @var Container $cnt */
 $cnt = require_once __DIR__ . '/bootstrap.php';
 
-ConsoleRunner::run(
-    ConsoleRunner::createHelperSet($cnt[EntityManager::class])
-);
+return ConsoleRunner::createHelperSet($cnt[EntityManager::class]);
