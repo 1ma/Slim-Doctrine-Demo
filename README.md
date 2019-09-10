@@ -3,7 +3,7 @@
 [![Build Status](https://scrutinizer-ci.com/g/1ma/Slim-Doctrine-Demo/badges/build.png?b=master)](https://scrutinizer-ci.com/g/1ma/Slim-Doctrine-Demo/build-status/master) [![Code Coverage](https://scrutinizer-ci.com/g/1ma/Slim-Doctrine-Demo/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/1ma/Slim-Doctrine-Demo/?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/1ma/Slim-Doctrine-Demo/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/1ma/Slim-Doctrine-Demo/?branch=master)
 
 A project to demonstrate how to integrate Doctrine into Slim. This is the companion
-code for the Cookbook entry [Using Doctrine with Slim] in Slim's v3 documentation.
+code for the Cookbook entry [Using Doctrine with Slim] in Slim's documentation.
 
 ## Requirements
 
@@ -32,11 +32,11 @@ Slim-Doctrine-Demo
 │   ├── Action              -- Slim request handlers
 │   │   ├── CreateUser.php
 │   │   └── ListUsers.php
-│   ├── Domain              -- Annotated entity classes
-│   │   └── User.php
-│   └── Provider
-│       ├── Doctrine.php    -- EntityManager service definition
-│       └── Slim.php        -- Slim service definitions
+│   ├── DI
+│   │   ├── Doctrine.php    -- EntityManager service definition
+│   │   └── Slim.php        -- Slim request handlers service definitions
+│   └── Domain              -- Annotated entity classes
+│       └── User.php
 ├── tests/                  -- Automated tests
 ├── var
 │   ├── coverage/           -- Test coverage results in HTML

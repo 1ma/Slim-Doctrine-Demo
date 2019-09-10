@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace UMA\DoctrineDemo\Action;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\ORMException;
 use Faker;
 use Nyholm\Psr7;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use UMA\DoctrineDemo\Domain\User;
 
 class CreateUser
