@@ -24,19 +24,16 @@
         "uma/dic": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.0",
+        "phpunit/phpunit": "^7.5",
         "roave/security-advisories": "dev-master"
     },
     "scripts": {
         "serve": [
             "@composer install",
-            "cp settings_devel.php settings.php",
             "php vendor/bin/doctrine orm:schema:update --force",
             "php -S localhost:8000 -t public public/index.php"
         ],
         "test": [
-            "@composer install",
-            "cp settings_test.php settings.php",
             "php vendor/bin/phpunit"
         ]
     },

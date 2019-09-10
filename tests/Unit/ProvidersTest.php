@@ -14,7 +14,7 @@ class ProvidersTest extends TestCase
 {
     public function testContainer(): void
     {
-        $sut = new Container(require APP_ROOT . '/settings.php');
+        $sut = new Container($GLOBALS['testingSettings']);
 
         $sut->register(new DI\Slim());
         $sut->register(new DI\Doctrine());

@@ -48,8 +48,7 @@ Slim-Doctrine-Demo
 ├── phpunit.xml.dist
 ├── README.md
 ├── settings.php            -- Settings currently in use (not committed to Git)
-├── settings_devel.php      -- Settings for development
-└── settings_test.php       -- Settings for running the tests
+└── settings.php.dist       -- Sample settings file for development (committed to Git)
 ```
 
 ## Running the app
