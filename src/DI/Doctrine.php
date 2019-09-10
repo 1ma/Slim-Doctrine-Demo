@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace UMA\DoctrineDemo\Provider;
+namespace UMA\DoctrineDemo\DI;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Cache\FilesystemCache;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\Tools\Setup;
-use Pimple\Container;
-use Pimple\ServiceProviderInterface;
+use UMA\DIC\Container;
+use UMA\DIC\ServiceProvider;
 
 /**
  * A ServiceProvider for registering services related to
@@ -19,36 +19,39 @@ use Pimple\ServiceProviderInterface;
  * If the project had custom repositories (e.g. UserRepository)
  * they could be registered here.
  */
-class Doctrine implements ServiceProviderInterface
+class Doctrine implements ServiceProvider
 {
     /**
      * {@inheritdoc}
      */
-    public function register(Container $cnt)
+    public function provide(Container $c): void
     {
-        $cnt[EntityManager::class] = function (Container $cnt): EntityManager {
+        $c->set(EntityManager::class, static function (Container $c): EntityManager {
+            /** @var array $settings */
+            $settings = $c->get('settings');
+
             $config = Setup::createAnnotationMetadataConfiguration(
-                $cnt['settings']['doctrine']['metadata_dirs'],
-                $cnt['settings']['doctrine']['dev_mode']
+                $settings['doctrine']['metadata_dirs'],
+                $settings['doctrine']['dev_mode']
             );
 
             $config->setMetadataDriverImpl(
                 new AnnotationDriver(
                     new AnnotationReader,
-                    $cnt['settings']['doctrine']['metadata_dirs']
+                    $settings['doctrine']['metadata_dirs']
                 )
             );
 
             $config->setMetadataCacheImpl(
                 new FilesystemCache(
-                    $cnt['settings']['doctrine']['cache_dir']
+                    $settings['doctrine']['cache_dir']
                 )
             );
 
             return EntityManager::create(
-                $cnt['settings']['doctrine']['connection'],
+                $settings['doctrine']['connection'],
                 $config
             );
-        };
+        });
     }
 }

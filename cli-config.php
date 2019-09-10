@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use Slim\Container;
+use Psr\Container\ContainerInterface;
 
-/** @var Container $cnt */
+/** @var ContainerInterface $cnt */
 $cnt = require_once __DIR__ . '/bootstrap.php';
 
-return ConsoleRunner::createHelperSet($cnt[EntityManager::class]);
+return ConsoleRunner::createHelperSet($cnt->get(EntityManager::class));

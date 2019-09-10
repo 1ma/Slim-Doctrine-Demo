@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-use UMA\DoctrineDemo\Provider\Doctrine;
-use UMA\DoctrineDemo\Provider\Slim;
-use Slim\Container;
+use UMA\DIC\Container;
+use UMA\DoctrineDemo\DI;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -16,7 +15,7 @@ if (!file_exists(APP_ROOT . '/settings.php')) {
 
 $cnt = new Container(require __DIR__ . '/settings.php');
 
-$cnt->register(new Doctrine())
-    ->register(new Slim());
+$cnt->register(new DI\Doctrine());
+$cnt->register(new DI\Slim());
 
 return $cnt;

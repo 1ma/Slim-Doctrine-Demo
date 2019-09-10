@@ -7,8 +7,8 @@ namespace UMA\Tests\DoctrineDemo\Unit;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\TestCase;
 use Slim\App;
-use Slim\Container;
-use UMA\DoctrineDemo\Provider;
+use UMA\DIC\Container;
+use UMA\DoctrineDemo\DI;
 
 class ProvidersTest extends TestCase
 {
@@ -16,10 +16,10 @@ class ProvidersTest extends TestCase
     {
         $sut = new Container(require APP_ROOT . '/settings.php');
 
-        $sut->register(new Provider\Slim())
-            ->register(new Provider\Doctrine());
+        $sut->register(new DI\Slim());
+        $sut->register(new DI\Doctrine());
 
-        self::assertInstanceOf(App::class, $sut[App::class]);
-        self::assertInstanceOf(EntityManager::class, $sut[EntityManager::class]);
+        self::assertInstanceOf(App::class, $sut->get(App::class));
+        self::assertInstanceOf(EntityManager::class, $sut->get(EntityManager::class));
     }
 }

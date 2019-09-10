@@ -7,10 +7,10 @@ namespace UMA\Tests\DoctrineDemo\Functional;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Tools\SchemaTool;
+use Nyholm\Psr7\ServerRequest;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Slim\App;
-use Slim\Http;
 
 class EndToEndTest extends TestCase
 {
@@ -31,10 +31,11 @@ class EndToEndTest extends TestCase
 
     public static function setUpBeforeClass()
     {
-        self::$app = $GLOBALS['cnt'][App::class];
+        self::$app = $GLOBALS['cnt']->get(App::class);
 
         /** @var EntityManager $em */
-        $em = self::$app->getContainer()[EntityManager::class];
+        $em = self::$app->getContainer()->get(EntityManager::class);
+
         self::$schema = $em->getMetadataFactory()->getAllMetadata();
         self::$tool = new SchemaTool($em);
     }
@@ -47,10 +48,8 @@ class EndToEndTest extends TestCase
 
     public function testCreatingAUserWithThePostEndpoint(): void
     {
-        $response = $this->runApp(new Http\Environment([
-            'REQUEST_METHOD' => 'POST',
-            'REQUEST_URI' => '/users'
-        ]));
+        $request = new ServerRequest('POST', '/users');
+        $response = self::$app->handle($request);
 
         self::assertSame(201, $response->getStatusCode());
         self::assertArrayHasKey('Content-Type', $response->getHeaders());
@@ -59,10 +58,8 @@ class EndToEndTest extends TestCase
 
     public function testGettingAListOfUsersWithTheGetEndpoint(): ResponseInterface
     {
-        $response = $this->runApp(new Http\Environment([
-            'REQUEST_METHOD' => 'GET',
-            'REQUEST_URI' => '/users'
-        ]));
+        $request = new ServerRequest('GET', '/users');
+        $response = self::$app->handle($request);
 
         self::assertSame(200, $response->getStatusCode());
         self::assertArrayHasKey('Content-Type', $response->getHeaders());
@@ -87,16 +84,5 @@ class EndToEndTest extends TestCase
 
         $users = json_decode((string) $this->testGettingAListOfUsersWithTheGetEndpoint()->getBody());
         self::assertCount(4, $users);
-    }
-
-    protected function runApp(Http\Environment $environment): Http\Response
-    {
-        /** @var Http\Response $response */
-        $response = self::$app->process(
-            Http\Request::createFromEnvironment($environment),
-            new Http\Response()
-        );
-
-        return $response;
     }
 }
