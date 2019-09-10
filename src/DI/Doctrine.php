@@ -32,8 +32,7 @@ class Doctrine implements ServiceProvider
                 $settings['doctrine']['metadata_dirs'],
                 $settings['doctrine']['dev_mode'],
                 null,
-                $settings['doctrine']['dev_mode'] ? null : new FilesystemCache($settings['doctrine']['cache_dir']),
-                false
+                $settings['doctrine']['dev_mode'] ? null : new FilesystemCache($settings['doctrine']['cache_dir'])
             );
 
             return EntityManager::create(
