@@ -28,7 +28,7 @@ class Doctrine implements ServiceProvider
             /** @var array $settings */
             $settings = $c->get('settings');
 
-            $config = Setup::createAnnotationMetadataConfiguration(
+            $ormConfiguration = Setup::createAnnotationMetadataConfiguration(
                 $settings['doctrine']['metadata_dirs'],
                 $settings['doctrine']['dev_mode'],
                 null,
@@ -37,7 +37,7 @@ class Doctrine implements ServiceProvider
 
             return EntityManager::create(
                 $settings['doctrine']['connection'],
-                $config
+                $ormConfiguration
             );
         });
     }
