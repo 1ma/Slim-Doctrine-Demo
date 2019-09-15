@@ -1,5 +1,4 @@
 /.idea/
-/composer.lock
 /settings.php
 /var/
 !/var/.gitkeep
