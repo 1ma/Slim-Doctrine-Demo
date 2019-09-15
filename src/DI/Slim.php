@@ -39,7 +39,16 @@ class Slim implements ServiceProvider
         });
 
         $c->set(App::class, static function (Container $c): App {
+            /** @var array $settings */
+            $settings = $c->get('settings');
+
             $app = AppFactory::create(null, $c);
+
+            $app->addErrorMiddleware(
+                $settings['slim']['displayErrorDetails'],
+                $settings['slim']['logErrors'],
+                $settings['slim']['logErrorDetails']
+            );
 
             $app->get('/users', ListUsers::class);
             $app->post('/users', CreateUser::class);

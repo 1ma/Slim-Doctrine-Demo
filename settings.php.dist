@@ -8,7 +8,11 @@ define('APP_ROOT', __DIR__);
 
 return [
     'settings' => [
-        'displayErrorDetails' => true,
+        'slim' => [
+            'displayErrorDetails' => true,
+            'logErrors' => true,
+            'logErrorDetails' => true,
+        ],
 
         'doctrine' => [
             'dev_mode' => true,
