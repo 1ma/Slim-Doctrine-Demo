@@ -29,7 +29,7 @@ class EndToEndTest extends TestCase
      */
     private static $schema;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$app = $GLOBALS['cnt']->get(App::class);
 
@@ -40,7 +40,7 @@ class EndToEndTest extends TestCase
         self::$tool = new SchemaTool($em);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         self::$tool->dropSchema(self::$schema);
         self::$tool->createSchema(self::$schema);
