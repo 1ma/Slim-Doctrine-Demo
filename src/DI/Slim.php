@@ -32,22 +32,16 @@ class Slim implements ServiceProvider
             return Faker\Factory::create();
         });
 
-        $c->set(ResponseFactoryInterface::class, static function(): ResponseFactoryInterface {
-            return new Psr17Factory();
-        });
-
         $c->set(ListUsers::class, static function(Container $c): RequestHandlerInterface {
             return new ListUsers(
-                $c->get(EntityManager::class),
-                $c->get(ResponseFactoryInterface::class)
+                $c->get(EntityManager::class)
             );
         });
 
         $c->set(CreateUser::class, static function(Container $c): RequestHandlerInterface {
             return new CreateUser(
                 $c->get(EntityManager::class),
-                $c->get(Faker\Generator::class),
-                $c->get(ResponseFactoryInterface::class)
+                $c->get(Faker\Generator::class)
             );
         });
 

@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace UMA\DoctrineDemo\Action;
 
 use Doctrine\ORM\EntityManager;
-use Nyholm\Psr7\Stream;
-use Psr\Http\Message\ResponseFactoryInterface;
+use Nyholm\Psr7;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -20,15 +19,9 @@ class ListUsers implements RequestHandlerInterface
      */
     private $em;
 
-    /**
-     * @var ResponseFactoryInterface
-     */
-    private $responseFactory;
-
-    public function __construct(EntityManager $em, ResponseFactoryInterface $responseFactory)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
-        $this->responseFactory = $responseFactory;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
@@ -38,11 +31,15 @@ class ListUsers implements RequestHandlerInterface
             ->getRepository(User::class)
             ->findAll();
 
-        $body = Stream::create(json_encode($users));
+        $body = Psr7\Stream::create(json_encode($users, JSON_PRETTY_PRINT) . PHP_EOL);
 
-        return $this->responseFactory->createResponse()
-            ->withHeader('Content-Type', 'application/json')
-            ->withHeader('Content-Length', $body->getSize())
-            ->withBody($body);
+        return new Psr7\Response(
+            200,
+            [
+                'Content-Type' => 'application/json',
+                'Content-Length' => $body->getSize()
+            ],
+            $body
+        );
     }
 }

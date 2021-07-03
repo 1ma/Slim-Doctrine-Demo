@@ -2,7 +2,7 @@
 
 [![Build Status](https://scrutinizer-ci.com/g/1ma/Slim-Doctrine-Demo/badges/build.png?b=master)](https://scrutinizer-ci.com/g/1ma/Slim-Doctrine-Demo/build-status/master) [![Code Coverage](https://scrutinizer-ci.com/g/1ma/Slim-Doctrine-Demo/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/1ma/Slim-Doctrine-Demo/?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/1ma/Slim-Doctrine-Demo/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/1ma/Slim-Doctrine-Demo/?branch=master)
 
-A project to demonstrate how to integrate Doctrine into Slim. This is the companion
+A project to demonstrate how to integrate Doctrine 2.x into Slim. This is the companion
 code for the Cookbook entry [Using Doctrine with Slim] in Slim's documentation.
 
 ## Requirements
@@ -59,14 +59,14 @@ the API at `http://localhost:8000`. Once it is running you can make requests aga
 curl or similar tools.
 
 ```bash
-$ curl -s -X POST localhost:8000/users | jq .
+$ curl -X POST localhost:8000/users
 {
   "registered_at": "2017-11-11T15:33:56+01:00",
   "username": "Dr. Salvatore Beahan",
   "id": 2
 }
 
-$ curl -s -X GET localhost:8000/users | jq .
+$ curl -X GET localhost:8000/users
 [
   {
     "registered_at": "2017-11-11T15:32:46+01:00",
