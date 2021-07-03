@@ -43,12 +43,13 @@ Slim-Doctrine-Demo
 │   ├── doctrine/           -- Doctrine metadata cache
 │   └── database.sqlite     -- Development database
 ├── bootstrap.php           -- DI container setup (requires ./settings.php)
+├── cli-config.php          -- Configuration file for the vendor/bin/doctrine development tool
 ├── composer.json
 ├── LICENSE
 ├── phpunit.xml.dist
 ├── README.md
-├── settings.php            -- Settings currently in use (not committed to Git)
-└── settings.php.dist       -- Sample settings file for development (committed to Git)
+├── settings.php            -- Settings currently in use (ignored by Git)
+└── settings.php.dist       -- Sample settings.php for development (committed to Git)
 ```
 
 ## Running the app
