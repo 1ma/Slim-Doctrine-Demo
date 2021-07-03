@@ -5,32 +5,42 @@ declare(strict_types=1);
 namespace UMA\DoctrineDemo\Action;
 
 use Doctrine\ORM\EntityManager;
-use Nyholm\Psr7;
+use Nyholm\Psr7\Stream;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use UMA\DoctrineDemo\Domain\User;
+use function json_encode;
 
-class ListUsers
+class ListUsers implements RequestHandlerInterface
 {
     /**
      * @var EntityManager
      */
     private $em;
 
-    public function __construct(EntityManager $em)
+    /**
+     * @var ResponseFactoryInterface
+     */
+    private $responseFactory;
+
+    public function __construct(EntityManager $em, ResponseFactoryInterface $responseFactory)
     {
         $this->em = $em;
+        $this->responseFactory = $responseFactory;
     }
 
-    public function __invoke(Psr7\ServerRequest $request, Psr7\Response $response): Psr7\Response
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         /** @var User[] $users */
         $users = $this->em
             ->getRepository(User::class)
             ->findAll();
 
-        $body = Psr7\Stream::create(\json_encode($users));
+        $body = Stream::create(json_encode($users));
 
-        return $response
-            ->withStatus(200)
+        return $this->responseFactory->createResponse()
             ->withHeader('Content-Type', 'application/json')
             ->withHeader('Content-Length', $body->getSize())
             ->withBody($body);

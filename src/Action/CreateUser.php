@@ -6,10 +6,15 @@ namespace UMA\DoctrineDemo\Action;
 
 use Doctrine\ORM\EntityManager;
 use Faker;
-use Nyholm\Psr7;
+use Nyholm\Psr7\Stream;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use UMA\DoctrineDemo\Domain\User;
+use function json_encode;
 
-class CreateUser
+class CreateUser implements RequestHandlerInterface
 {
     /**
      * @var EntityManager
@@ -21,23 +26,28 @@ class CreateUser
      */
     private $faker;
 
-    public function __construct(EntityManager $em, Faker\Generator $faker)
+    /**
+     * @var ResponseFactoryInterface
+     */
+    private $responseFactory;
+
+    public function __construct(EntityManager $em, Faker\Generator $faker, ResponseFactoryInterface $responseFactory)
     {
         $this->em = $em;
         $this->faker = $faker;
+        $this->responseFactory = $responseFactory;
     }
 
-    public function __invoke(Psr7\ServerRequest $request, Psr7\Response $response): Psr7\Response
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $newRandomUser = new User($this->faker->name, $this->faker->password);
 
         $this->em->persist($newRandomUser);
         $this->em->flush();
 
-        $body = Psr7\Stream::create(\json_encode($newRandomUser));
+        $body = Stream::create(json_encode($newRandomUser));
 
-        return $response
-            ->withStatus(201)
+        return $this->responseFactory->createResponse(201)
             ->withHeader('Content-Type', 'application/json')
             ->withHeader('Content-Length', $body->getSize())
             ->withBody($body);

@@ -6,6 +6,9 @@ namespace UMA\DoctrineDemo\DI;
 
 use Doctrine\ORM\EntityManager;
 use Faker;
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
 use UMA\DIC\Container;
@@ -16,7 +19,7 @@ use UMA\DoctrineDemo\Action\ListUsers;
 /**
  * A ServiceProvider for registering services related
  * to Slim such as request handlers, routing and the
- * App service itself.
+ * App service itself that wires everything together.
  */
 class Slim implements ServiceProvider
 {
@@ -25,16 +28,26 @@ class Slim implements ServiceProvider
      */
     public function provide(Container $c): void
     {
-        $c->set(ListUsers::class, static function(Container $c): ListUsers {
+        $c->set(Faker\Generator::class, static function(): Faker\Generator {
+            return Faker\Factory::create();
+        });
+
+        $c->set(ResponseFactoryInterface::class, static function(): ResponseFactoryInterface {
+            return new Psr17Factory();
+        });
+
+        $c->set(ListUsers::class, static function(Container $c): RequestHandlerInterface {
             return new ListUsers(
-                $c->get(EntityManager::class)
+                $c->get(EntityManager::class),
+                $c->get(ResponseFactoryInterface::class)
             );
         });
 
-        $c->set(CreateUser::class, static function(Container $c): CreateUser {
+        $c->set(CreateUser::class, static function(Container $c): RequestHandlerInterface {
             return new CreateUser(
                 $c->get(EntityManager::class),
-                Faker\Factory::create()
+                $c->get(Faker\Generator::class),
+                $c->get(ResponseFactoryInterface::class)
             );
         });
 

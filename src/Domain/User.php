@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace UMA\DoctrineDemo\Domain;
 
+use DateTimeImmutable;
+use JsonSerializable;
+use function password_hash;
+
 /**
  * The User class demonstrates how to annotate a simple
  * PHP class to act as a Doctrine entity.
@@ -11,7 +15,7 @@ namespace UMA\DoctrineDemo\Domain;
  * @Entity()
  * @Table(name="users")
  */
-class User implements \JsonSerializable
+class User implements JsonSerializable
 {
     /**
      * @var int
@@ -37,7 +41,7 @@ class User implements \JsonSerializable
     private $hash;
 
     /**
-     * @var \DateTimeImmutable
+     * @var DateTimeImmutable
      *
      * @Column(type="datetimetz_immutable", nullable=false)
      */
@@ -47,7 +51,7 @@ class User implements \JsonSerializable
     {
         $this->username = $username;
         $this->hash = password_hash($password, PASSWORD_BCRYPT);
-        $this->registeredAt = new \DateTimeImmutable('now');
+        $this->registeredAt = new DateTimeImmutable('now');
     }
 
     public function getId(): int
@@ -65,7 +69,7 @@ class User implements \JsonSerializable
         return $this->hash;
     }
 
-    public function getRegisteredAt(): \DateTimeImmutable
+    public function getRegisteredAt(): DateTimeImmutable
     {
         return $this->registeredAt;
     }
@@ -79,7 +83,7 @@ class User implements \JsonSerializable
             'id' => $this->getId(),
             'username' => $this->getUsername(),
             'registered_at' => $this->getRegisteredAt()
-                ->format(\DateTime::ATOM)
+                ->format(DateTimeImmutable::ATOM)
         ];
     }
 }
