@@ -16,7 +16,7 @@
         "php": ">= 7.3",
         "ext-json": "*",
         "ext-sqlite3": "*",
-        "doctrine/cache": "^1.11",
+        "doctrine/cache": "^1.12",
         "doctrine/orm": "^2.9",
         "fzaninotto/faker": "^1.9",
         "nyholm/psr7": "^1.4",
