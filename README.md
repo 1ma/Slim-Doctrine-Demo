@@ -7,7 +7,7 @@ code for the Cookbook entry [Using Doctrine with Slim] in Slim's documentation.
 
 ## Requirements
 
-- PHP 7.3+
+- PHP 8.0+
 - PHP SQLite extension
 - [Composer]
 
@@ -27,16 +27,16 @@ users from an SQLite database.
 ```
 Slim-Doctrine-Demo
 ├── public
-│   └── index.php           -- HTTP front controller (requires ../bootstrap.php)
+│   └── index.php           -- HTTP front controller (requires ../bootstrap.php)
 ├── src
-│   ├── Action              -- Slim request handlers
-│   │   ├── CreateUser.php
-│   │   └── ListUsers.php
-│   ├── DI
-│   │   ├── Doctrine.php    -- EntityManager service definition
-│   │   └── Slim.php        -- Slim request handlers service definitions
-│   └── Domain              -- Annotated entity classes
-│       └── User.php
+│   ├── Action              -- Slim request handlers
+│   │   ├── CreateUser.php
+│   │   └── ListUsers.php
+│   ├── DI
+│   │   ├── Doctrine.php    -- EntityManager service definition
+│   │   └── Slim.php        -- Slim request handlers service definitions
+│   └── Domain              -- Annotated entity classes
+│       └── User.php
 ├── tests/                  -- Automated tests
 ├── var
 │   ├── coverage/           -- Test coverage results in HTML
@@ -53,7 +53,6 @@ Slim-Doctrine-Demo
 ```
 
 ## Running the app
-
 Typing `composer serve` in a console will install the project dependencies, create the database and open
 the API at `http://localhost:8000`. Once it is running you can make requests against it with a browser,
 curl or similar tools.

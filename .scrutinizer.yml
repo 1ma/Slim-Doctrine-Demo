@@ -1,13 +1,9 @@
 filter:
     excluded_paths:
         - 'tests/*'
-checks:
-    php: true
-coding_style:
-    php: {  }
 build:
     environment:
-        php: '7.3'
+        php: '8.0'
     tests:
         override:
             -
