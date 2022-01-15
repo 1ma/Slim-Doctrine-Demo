@@ -12,12 +12,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 use UMA\DoctrineDemo\Domain\User;
 use function json_encode;
 
-class ListUsers implements RequestHandlerInterface
+final class ListUsers implements RequestHandlerInterface
 {
-    /**
-     * @var EntityManager
-     */
-    private $em;
+    private EntityManager $em;
 
     public function __construct(EntityManager $em)
     {
@@ -33,13 +30,6 @@ class ListUsers implements RequestHandlerInterface
 
         $body = Psr7\Stream::create(json_encode($users, JSON_PRETTY_PRINT) . PHP_EOL);
 
-        return new Psr7\Response(
-            200,
-            [
-                'Content-Type' => 'application/json',
-                'Content-Length' => $body->getSize()
-            ],
-            $body
-        );
+        return new Psr7\Response(200, ['Content-Type' => 'application/json'], $body);
     }
 }

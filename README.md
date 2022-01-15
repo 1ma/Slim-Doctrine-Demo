@@ -45,9 +45,10 @@ Slim-Doctrine-Demo
 ├── bootstrap.php           -- DI container setup (requires ./settings.php)
 ├── cli-config.php          -- Configuration file for the vendor/bin/doctrine development tool
 ├── composer.json
+├── composer.lock
 ├── LICENSE
 ├── phpunit.xml.dist
-├── README.md
+├── README.md               -- You are here.
 ├── settings.php            -- Settings currently in use (ignored by Git)
 └── settings.php.dist       -- Sample settings.php for development (committed to Git)
 ```
@@ -60,23 +61,23 @@ curl or similar tools.
 ```bash
 $ curl -X POST localhost:8000/users
 {
-  "registered_at": "2017-11-11T15:33:56+01:00",
-  "username": "Dr. Salvatore Beahan",
-  "id": 2
+    "id": 2,
+    "email": "oraynor@oconnell.info",
+    "registered_at": "2022-01-15T23:10:51+01:00"
 }
 
 $ curl -X GET localhost:8000/users
 [
-  {
-    "registered_at": "2017-11-11T15:32:46+01:00",
-    "username": "Lyda Romaguera",
-    "id": 1
-  },
-  {
-    "registered_at": "2017-11-11T15:33:56+01:00",
-    "username": "Dr. Salvatore Beahan",
-    "id": 2
-  }
+    {
+        "id": 1,
+        "email": "aratke@schroeder.com",
+        "registered_at": "2022-01-15T23:10:50+01:00"
+    },
+    {
+        "id": 2,
+        "email": "oraynor@oconnell.info",
+        "registered_at": "2022-01-15T23:10:51+01:00"
+    }
 ]
 ```
 

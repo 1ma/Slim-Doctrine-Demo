@@ -13,16 +13,15 @@
         }
     },
     "require": {
-        "php": "^8.0",
+        "php": "^8.0.0 || ^8.1.0",
         "ext-json": "*",
         "ext-sqlite3": "*",
-        "doctrine/annotations": "^1.13",
-        "doctrine/cache": "^1.12",
         "doctrine/orm": "^2.11",
         "fakerphp/faker": "^1.17",
         "nyholm/psr7": "^1.4",
         "nyholm/psr7-server": "^1.0",
         "slim/slim": "^4.9",
+        "symfony/cache": "^6.0",
         "uma/dic": "^3.0"
     },
     "require-dev": {

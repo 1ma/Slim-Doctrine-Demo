@@ -10,7 +10,7 @@ use Slim\App;
 use UMA\DIC\Container;
 use UMA\DoctrineDemo\DI;
 
-class ProvidersTest extends TestCase
+final class ProvidersTest extends TestCase
 {
     public function testContainer(): void
     {

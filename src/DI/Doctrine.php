@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace UMA\DoctrineDemo\DI;
 
-use Doctrine\Common\Cache\FilesystemCache;
+use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
+use Psr\Container\ContainerInterface;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use UMA\DIC\Container;
 use UMA\DIC\ServiceProvider;
 
@@ -17,28 +20,29 @@ use UMA\DIC\ServiceProvider;
  * If the project had custom repositories (e.g. UserRepository)
  * they could be registered here.
  */
-class Doctrine implements ServiceProvider
+final class Doctrine implements ServiceProvider
 {
     /**
      * {@inheritdoc}
      */
     public function provide(Container $c): void
     {
-        $c->set(EntityManager::class, static function (Container $c): EntityManager {
+        $c->set(EntityManager::class, static function (ContainerInterface $c): EntityManager {
             /** @var array $settings */
             $settings = $c->get('settings');
 
-            $ormConfiguration = Setup::createAnnotationMetadataConfiguration(
+            $cache = $settings['doctrine']['dev_mode'] ?
+                DoctrineProvider::wrap(new ArrayAdapter()) :
+                DoctrineProvider::wrap(new FilesystemAdapter(directory: $settings['doctrine']['cache_dir']));
+
+            $config = Setup::createAttributeMetadataConfiguration(
                 $settings['doctrine']['metadata_dirs'],
                 $settings['doctrine']['dev_mode'],
                 null,
-                $settings['doctrine']['dev_mode'] ? null : new FilesystemCache($settings['doctrine']['cache_dir'])
+                $cache
             );
 
-            return EntityManager::create(
-                $settings['doctrine']['connection'],
-                $ormConfiguration
-            );
+            return EntityManager::create($settings['doctrine']['connection'], $config);
         });
     }
 }

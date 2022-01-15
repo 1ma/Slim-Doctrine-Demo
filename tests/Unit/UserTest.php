@@ -6,8 +6,9 @@ namespace UMA\Tests\DoctrineDemo\Unit;
 
 use PHPUnit\Framework\TestCase;
 use UMA\DoctrineDemo\Domain\User;
+use function password_verify;
 
-class UserTest extends TestCase
+final class UserTest extends TestCase
 {
     public function testPasswordIsHashedWithBcrypt(): void
     {

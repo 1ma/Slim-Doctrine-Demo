@@ -11,23 +11,15 @@ use Nyholm\Psr7\ServerRequest;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Slim\App;
+use function json_decode;
 
-class EndToEndTest extends TestCase
+final class EndToEndTest extends TestCase
 {
-    /**
-     * @var App
-     */
-    private static $app;
+    private static App $app;
+    private static SchemaTool $tool;
 
-    /**
-     * @var SchemaTool
-     */
-    private static $tool;
-
-    /**
-     * @var ClassMetadata[]
-     */
-    private static $schema;
+    /** @var ClassMetadata[] */
+    private static array $schema;
 
     public static function setUpBeforeClass(): void
     {

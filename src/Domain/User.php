@@ -5,51 +5,34 @@ declare(strict_types=1);
 namespace UMA\DoctrineDemo\Domain;
 
 use DateTimeImmutable;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Table;
 use JsonSerializable;
 use function password_hash;
 
-/**
- * The User class demonstrates how to annotate a simple
- * PHP class to act as a Doctrine entity.
- *
- * @Entity()
- * @Table(name="users")
- */
-class User implements JsonSerializable
+// The User class demonstrates how to annotate a simple PHP class to act as a Doctrine entity.
+
+#[Entity, Table(name: 'users')]
+final class User implements JsonSerializable
 {
-    /**
-     * @var int
-     *
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+    #[Id, Column(type: 'integer'), GeneratedValue(strategy: 'AUTO')]
+    private int $id;
 
-    /**
-     * @var string
-     *
-     * @Column(type="string", nullable=false, unique=true)
-     */
-    private $username;
+    #[Column(type: 'string', unique: true, nullable: false)]
+    private string $email;
 
-    /**
-     * @var string
-     *
-     * @Column(type="string", length=60, nullable=false)
-     */
-    private $hash;
+    #[Column(name: 'bcrypt_hash', type: 'string', length: 60, nullable: false)]
+    private string $hash;
 
-    /**
-     * @var DateTimeImmutable
-     *
-     * @Column(type="datetimetz_immutable", nullable=false)
-     */
-    private $registeredAt;
+    #[Column(name: 'registered_at', type: 'datetimetz_immutable', nullable: false)]
+    private DateTimeImmutable $registeredAt;
 
-    public function __construct(string $username, string $password)
+    public function __construct(string $email, string $password)
     {
-        $this->username = $username;
+        $this->email = $email;
         $this->hash = password_hash($password, PASSWORD_BCRYPT);
         $this->registeredAt = new DateTimeImmutable('now');
     }
@@ -59,9 +42,9 @@ class User implements JsonSerializable
         return $this->id;
     }
 
-    public function getUsername(): string
+    public function getEmail(): string
     {
-        return $this->username;
+        return $this->email;
     }
 
     public function getHash(): string
@@ -81,7 +64,7 @@ class User implements JsonSerializable
     {
         return [
             'id' => $this->getId(),
-            'username' => $this->getUsername(),
+            'email' => $this->getEmail(),
             'registered_at' => $this->getRegisteredAt()
                 ->format(DateTimeImmutable::ATOM)
         ];
