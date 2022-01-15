@@ -16,8 +16,9 @@
         "php": "^8.0",
         "ext-json": "*",
         "ext-sqlite3": "*",
+        "doctrine/annotations": "^1.13",
         "doctrine/cache": "^1.12",
-        "doctrine/orm": "^2.10",
+        "doctrine/orm": "^2.11",
         "fakerphp/faker": "^1.17",
         "nyholm/psr7": "^1.4",
         "nyholm/psr7-server": "^1.0",
@@ -40,6 +41,9 @@
     },
     "config": {
         "process-timeout": 0,
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true
+        }
     }
 }
