@@ -1,24 +1,17 @@
 on: push
 
 jobs:
-  php80-test:
+  test:
+    name: Run tests in PHP ${{ matrix.php-version }}
     runs-on: ubuntu-latest
-    container: 1maa/php-dev:8.0
+    container: 1maa/php-dev:${{ matrix.php-version }}
+    strategy:
+      matrix:
+        php-version: ["8.0", "8.1"]
     steps:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Install dependencies
         run: composer install
-      - name: Run tests
-        run: composer test
-
-  php81-test:
-    runs-on: ubuntu-latest
-    container: 1maa/php-dev:8.1
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Install dependencies
-        run: composer install
-      - name: Run tests
+      - name: Execute test suite
         run: composer test
