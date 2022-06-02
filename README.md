@@ -7,7 +7,7 @@ code for the Cookbook entry [Using Doctrine with Slim] in Slim's documentation.
 
 ## Requirements
 
-- PHP 8.0+
+- PHP 8.1+
 - PHP SQLite extension
 - [Composer]
 
