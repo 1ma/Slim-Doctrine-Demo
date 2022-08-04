@@ -17,7 +17,7 @@
         "ext-json": "*",
         "ext-sqlite3": "*",
         "doctrine/orm": "^2.12",
-        "fakerphp/faker": "^1.19",
+        "fakerphp/faker": "^1.20",
         "nyholm/psr7": "^1.5",
         "nyholm/psr7-server": "^1.0",
         "slim/slim": "^4.10",

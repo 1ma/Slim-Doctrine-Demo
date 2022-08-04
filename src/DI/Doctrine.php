@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace UMA\DoctrineDemo\DI;
 
-use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\ORMSetup;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -31,15 +30,13 @@ final class Doctrine implements ServiceProvider
             /** @var array $settings */
             $settings = $c->get('settings');
 
-            $cache = $settings['doctrine']['dev_mode'] ?
-                DoctrineProvider::wrap(new ArrayAdapter()) :
-                DoctrineProvider::wrap(new FilesystemAdapter(directory: $settings['doctrine']['cache_dir']));
-
-            $config = Setup::createAttributeMetadataConfiguration(
+            $config = ORMSetup::createAttributeMetadataConfiguration(
                 $settings['doctrine']['metadata_dirs'],
                 $settings['doctrine']['dev_mode'],
                 null,
-                $cache
+                $settings['doctrine']['dev_mode'] ?
+                    new FilesystemAdapter(directory: $settings['doctrine']['cache_dir']) :
+                    new ArrayAdapter()
             );
 
             return EntityManager::create($settings['doctrine']['connection'], $config);
