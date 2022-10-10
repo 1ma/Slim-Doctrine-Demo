@@ -60,7 +60,7 @@ final class User implements JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'id' => $this->getId(),

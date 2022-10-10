@@ -35,8 +35,8 @@ final class Doctrine implements ServiceProvider
                 $settings['doctrine']['dev_mode'],
                 null,
                 $settings['doctrine']['dev_mode'] ?
-                    new FilesystemAdapter(directory: $settings['doctrine']['cache_dir']) :
-                    new ArrayAdapter()
+                    new ArrayAdapter() :
+                    new FilesystemAdapter(directory: $settings['doctrine']['cache_dir'])
             );
 
             return EntityManager::create($settings['doctrine']['connection'], $config);
