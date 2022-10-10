@@ -21,7 +21,7 @@ final class User implements JsonSerializable
     #[Id, Column(type: 'integer'), GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    #[Column(type: 'string', unique: true, nullable: false)]
+    #[Column(type: 'string', unique: true, nullable: false, options: ['collation' => 'NOCASE'])]
     private string $email;
 
     #[Column(name: 'bcrypt_hash', type: 'string', length: 60, nullable: false)]
