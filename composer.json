@@ -13,15 +13,15 @@
         }
     },
     "require": {
-        "php": "^8.1.0",
+        "php": "^8.1.0 || ^8.2.0",
         "ext-json": "*",
         "ext-sqlite3": "*",
         "doctrine/orm": "^2.13",
         "fakerphp/faker": "^1.20",
         "nyholm/psr7": "^1.5",
         "nyholm/psr7-server": "^1.0",
-        "slim/slim": "^4.10",
-        "symfony/cache": "^6.1",
+        "slim/slim": "^4.11",
+        "symfony/cache": "^6.2",
         "uma/dic": "^3.0"
     },
     "require-dev": {
@@ -31,7 +31,7 @@
     "scripts": {
         "serve": [
             "@composer install",
-            "php vendor/bin/doctrine orm:schema:update --force",
+            "./bin/doctrine orm:schema:update --force",
             "php -S localhost:8000 -t public public/index.php"
         ],
         "test": [

@@ -83,12 +83,12 @@ $ curl -X GET localhost:8000/users
 
 ## Using the Doctrine Command Line Interface
 
-Run `php vendor/bin/doctrine` (this script needs the project dependencies, so run `composer install` first).
+Run `./bin/doctrine` (this script needs the project dependencies, so run `composer install` first).
 
 ## Running the tests
 
 Similarly, typing `composer test` will take care of loading the testing environment and running PHPUnit. If the XDebug exension is enabled code coverage results will be available at `var/coverage/` after running the tests.
 
 
+[Using Doctrine with Slim]: https://www.slimframework.com/docs/v4/cookbook/database-doctrine.html
 [Composer]: https://getcomposer.org/
-[Using Doctrine with Slim]: https://www.slimframework.com/docs/v3/cookbook/database-doctrine.html
