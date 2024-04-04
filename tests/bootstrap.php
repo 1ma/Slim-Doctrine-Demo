@@ -25,3 +25,5 @@ $cnt->register(new DI\Slim());
 // In this case $cnt is not returned, rather it will live as a global variable
 // at $GLOBALS['cnt'] during the whole execution of the test suite. The same
 // applies to the $testingSettings array.
+$GLOBALS['cnt'] = $cnt;
+$GLOBALS['testingSettings'] = $testingSettings;

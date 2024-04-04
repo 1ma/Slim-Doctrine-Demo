@@ -16,6 +16,7 @@ use function json_decode;
 final class EndToEndTest extends TestCase
 {
     private static App $app;
+    private static EntityManager $em;
     private static SchemaTool $tool;
 
     /** @var ClassMetadata[] */
@@ -25,15 +26,16 @@ final class EndToEndTest extends TestCase
     {
         self::$app = $GLOBALS['cnt']->get(App::class);
 
-        /** @var EntityManager $em */
-        $em = self::$app->getContainer()->get(EntityManager::class);
+        self::$em = self::$app->getContainer()->get(EntityManager::class);
 
-        self::$schema = $em->getMetadataFactory()->getAllMetadata();
-        self::$tool = new SchemaTool($em);
+        self::$schema = self::$em->getMetadataFactory()->getAllMetadata();
+        self::$tool = new SchemaTool(self::$em);
     }
 
     protected function setUp(): void
     {
+        self::$em->clear();
+
         self::$tool->dropSchema(self::$schema);
         self::$tool->createSchema(self::$schema);
     }

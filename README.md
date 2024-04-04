@@ -2,12 +2,12 @@
 
 [![.github/workflows/ci.yml](https://github.com/1ma/Slim-Doctrine-Demo/actions/workflows/ci.yml/badge.svg)](https://github.com/1ma/Slim-Doctrine-Demo/actions)
 
-A project to demonstrate how to integrate Doctrine 2.x into Slim. This is the companion
+A project to demonstrate how to integrate Doctrine 3.x into Slim. This is the companion
 code for the Cookbook entry [Using Doctrine with Slim] in Slim's documentation.
 
 ## Requirements
 
-- PHP 8.1+
+- PHP 8.2+
 - PHP SQLite extension
 - [Composer]
 

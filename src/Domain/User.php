@@ -16,7 +16,7 @@ use function password_hash;
 // The User class demonstrates how to annotate a simple PHP class to act as a Doctrine entity.
 
 #[Entity, Table(name: 'users')]
-final class User implements JsonSerializable
+final readonly class User implements JsonSerializable
 {
     #[Id, Column(type: 'integer'), GeneratedValue(strategy: 'AUTO')]
     private int $id;

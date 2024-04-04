@@ -13,7 +13,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use UMA\DoctrineDemo\Domain\User;
 use function json_encode;
 
-final class CreateUser implements RequestHandlerInterface
+final readonly class CreateUser implements RequestHandlerInterface
 {
     private EntityManager $em;
     private Faker\Generator $faker;
