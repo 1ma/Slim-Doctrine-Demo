@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace UMA\DoctrineDemo\DI;
 
+use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 use Psr\Container\ContainerInterface;
@@ -19,7 +20,7 @@ use UMA\DIC\ServiceProvider;
  * If the project had custom repositories (e.g. UserRepository)
  * they could be registered here.
  */
-final class Doctrine implements ServiceProvider
+final readonly class Doctrine implements ServiceProvider
 {
     /**
      * {@inheritdoc}
@@ -39,7 +40,9 @@ final class Doctrine implements ServiceProvider
                     new FilesystemAdapter(directory: $settings['doctrine']['cache_dir'])
             );
 
-            return EntityManager::create($settings['doctrine']['connection'], $config);
+            $connection = DriverManager::getConnection($settings['doctrine']['connection']);
+
+            return new EntityManager($connection, $config);
         });
     }
 }

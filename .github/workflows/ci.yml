@@ -4,13 +4,15 @@ jobs:
   test:
     name: Run tests in PHP ${{ matrix.php-version }}
     runs-on: ubuntu-latest
-    container: 1maa/php-dev:${{ matrix.php-version }}
     strategy:
       matrix:
-        php-version: ["8.1", "8.2"]
+        php-version: ["8.2", "8.3"]
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
       - name: Install dependencies
         run: composer install
       - name: Execute test suite

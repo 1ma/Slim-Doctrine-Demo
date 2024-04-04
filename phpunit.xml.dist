@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
-         beStrictAboutCoversAnnotation="true"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.0/phpunit.xsd"
+         beStrictAboutCoverageMetadata="true"
          beStrictAboutOutputDuringTests="true"
-         beStrictAboutTodoAnnotatedTests="true"
          bootstrap="tests/bootstrap.php"
          cacheResult="false"
          colors="true"
          executionOrder="depends,defects"
          failOnRisky="true"
          failOnWarning="true"
-         verbose="true"
 >
     <testsuites>
         <testsuite name="uma/slim-doctrine-demo test suite">
@@ -18,14 +16,17 @@
         </testsuite>
     </testsuites>
 
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">src</directory>
-        </include>
+    <coverage>
         <report>
             <clover outputFile="var/coverage.xml"/>
             <html outputDirectory="var/coverage"/>
             <text outputFile="php://stdout" showOnlySummary="true"/>
         </report>
     </coverage>
+
+    <source>
+        <include>
+            <directory>src</directory>
+        </include>
+    </source>
 </phpunit>

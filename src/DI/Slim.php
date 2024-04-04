@@ -21,7 +21,7 @@ use UMA\DoctrineDemo\Action\ListUsers;
  * to Slim such as request handlers, routing and the
  * App service itself that wires everything together.
  */
-final class Slim implements ServiceProvider
+final readonly class Slim implements ServiceProvider
 {
     /**
      * {@inheritdoc}

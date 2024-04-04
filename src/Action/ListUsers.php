@@ -12,7 +12,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use UMA\DoctrineDemo\Domain\User;
 use function json_encode;
 
-final class ListUsers implements RequestHandlerInterface
+final readonly class ListUsers implements RequestHandlerInterface
 {
     private EntityManager $em;
 
