@@ -40,6 +40,8 @@ final readonly class Doctrine implements ServiceProvider
                     new FilesystemAdapter(directory: $settings['doctrine']['cache_dir'])
             );
 
+            $config->enableNativeLazyObjects(true);
+
             $connection = DriverManager::getConnection($settings['doctrine']['connection']);
 
             return new EntityManager($connection, $config);

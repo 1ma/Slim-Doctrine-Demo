@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.0/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          beStrictAboutCoverageMetadata="true"
          beStrictAboutOutputDuringTests="true"
          bootstrap="tests/bootstrap.php"
-         cacheResult="false"
          colors="true"
-         executionOrder="depends,defects"
          failOnRisky="true"
          failOnWarning="true"
+         recordTestRunHistory="false"
 >
     <testsuites>
         <testsuite name="uma/slim-doctrine-demo test suite">
