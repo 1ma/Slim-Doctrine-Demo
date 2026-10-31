@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// bootstrap file for public/index.php and cli-config.php
+// bootstrap file for public/index.php and bin/doctrine
 
 use UMA\DIC\Container;
 
